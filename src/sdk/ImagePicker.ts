@@ -1,23 +1,6 @@
 import * as ExpoImagePicker from 'expo-image-picker'
 
-export type ImageInfo = {
-  uri: string
-  width: number
-  height: number
-  type?: 'image' | 'video'
-  base64?: string
-}
-
-export type ImagePickerResult =
-  | {
-      cancelled: true
-    }
-  | ({
-      cancelled: false
-    } & ImageInfo)
-  | undefined
-
-const takePhoto: () => Promise<ImagePickerResult> = async () => {
+const takePhoto: () => Promise<ExpoImagePicker.ImagePickerResult | undefined> = async () => {
   const { granted } = await ExpoImagePicker.requestCameraPermissionsAsync()
   // not supported on iOS simulator, you can use MediaLibrary with pickImage method instead
   if (granted) {
@@ -30,7 +13,7 @@ const takePhoto: () => Promise<ImagePickerResult> = async () => {
   return undefined
 }
 
-const pickImage: () => Promise<ImagePickerResult> = async () => {
+const pickImage: () => Promise<ExpoImagePicker.ImagePickerResult | undefined> = async () => {
   const { granted } = await ExpoImagePicker.requestMediaLibraryPermissionsAsync()
   if (granted) {
     const pickerResult = await ExpoImagePicker.launchImageLibraryAsync({

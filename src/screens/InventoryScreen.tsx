@@ -1,8 +1,9 @@
+import { Title } from '@components/Title'
+import { ValuableCard } from '@components/ValuableCard'
 import { addValuable, selectValuables } from '@store/features/valuablesSlice'
 import { FC } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { Title } from '../components/Title'
 import { RootTabScreenProps } from '../navigation/types'
 import { colors } from '../theme/colors'
 
@@ -11,16 +12,39 @@ const InventoryScreen: FC<RootTabScreenProps<'Inventory'>> = ({ navigation, rout
   const dispatch = useDispatch()
 
   const handleAddValuablePress = () =>
-    dispatch(addValuable({ name: 'test', purchasePrice: 100, photo: '' }))
+    dispatch(
+      addValuable({
+        name: 'Lou.Yetu necklace',
+        purchasePrice: 100,
+        photo:
+          'https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw4ba24826/images/large/637708739570526487-2088237.png?sw=750&sh=750&sm=fit&sfrm=png',
+      }),
+    )
+
   const handleAddButtonPress = () => navigation.navigate('AddItem')
 
   return (
     <View style={styles.container}>
-      <Title onButtonPress={handleAddButtonPress}>{route.name}</Title>
-      <Text>{JSON.stringify(valuables)}</Text>
-      <Pressable>
-        <Text onPress={handleAddValuablePress}>Add valuable</Text>
-      </Pressable>
+      <FlatList
+        style={styles.flatlist}
+        numColumns={2}
+        contentInset={{ bottom: 20 }}
+        keyExtractor={(item) => item.id.toString()}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        data={valuables}
+        ListHeaderComponent={() => (
+          <>
+            <Title onButtonPress={handleAddButtonPress}>{route.name}</Title>
+          </>
+        )}
+        renderItem={({ item, index }) => (
+          <ValuableCard
+            valuable={item}
+            key={item.id}
+            containerStyle={index % 2 === 0 ? styles.leftItem : styles.rightItem}
+          />
+        )}
+      />
     </View>
   )
 }
@@ -28,8 +52,21 @@ const InventoryScreen: FC<RootTabScreenProps<'Inventory'>> = ({ navigation, rout
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
     backgroundColor: colors.background,
+  },
+  flatlist: {
+    paddingHorizontal: 20,
+  },
+  separator: {
+    height: 20,
+  },
+  leftItem: {
+    flex: 0.5,
+    marginRight: 10,
+  },
+  rightItem: {
+    flex: 0.5,
+    marginLeft: 10,
   },
 })
 

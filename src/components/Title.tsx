@@ -1,12 +1,18 @@
 import { fonts } from '@theme/fonts'
-import { StyleSheet, Text, View } from 'react-native'
+import { FC } from 'react'
+import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native'
 import AddButton from './AddButton'
 
-export const Title = (props: { children: string; onButtonPress?: () => void }) => {
+type Props = {
+  children: string
+  style?: StyleProp<TextStyle>
+  onButtonPress?: () => void
+}
+export const Title: FC<Props> = ({ children, style, onButtonPress }) => {
   return (
     <View style={styles.titleContainer}>
-      <Text style={styles.title}>{props.children}</Text>
-      {props.onButtonPress ? <AddButton onPress={props.onButtonPress} /> : null}
+      <Text style={[styles.title, style]}>{children}</Text>
+      {onButtonPress ? <AddButton onPress={onButtonPress} /> : null}
     </View>
   )
 }
