@@ -4,6 +4,12 @@ import { useFonts } from 'expo-font'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { fonts } from './src/theme/fonts'
 import { ActivityIndicator } from 'react-native'
+import { Provider } from 'react-redux'
+import { store } from '@store/store'
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
+
+const persistor = persistStore(store)
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -13,9 +19,13 @@ export default function App() {
   if (!fontsLoaded)
     return <ActivityIndicator size='large' style={{ justifyContent: 'center', flex: 1 }} />
   return (
-    <SafeAreaProvider>
-      <Navigation />
-      <StatusBar />
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeAreaProvider>
+          <Navigation />
+          <StatusBar />
+        </SafeAreaProvider>
+      </PersistGate>
+    </Provider>
   )
 }
