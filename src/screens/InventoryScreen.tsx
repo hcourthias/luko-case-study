@@ -15,7 +15,7 @@ const InventoryScreen: FC<RootTabScreenProps<'Inventory'>> = ({ route }) => {
   const valuables = useSelector(selectValuables)
   const dispatch = useDispatch()
   const { showAlert } = useAlert()
-  const { handleOnScroll } = useAnimatedHeader(route.name)
+  const { handleOnScroll } = useAnimatedHeader(route.name, 42)
 
   const handleOnValuablePress = (item: Valuable) => {
     showAlert({
