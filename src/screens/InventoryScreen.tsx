@@ -37,9 +37,8 @@ const InventoryScreen: FC = () => {
       <Animated.FlatList
         scrollEventThrottle={16}
         onScroll={handleOnScroll}
-        style={styles.flatlist}
+        contentContainerStyle={styles.flatlist}
         numColumns={2}
-        contentInset={{ bottom: 20 }}
         keyExtractor={(item) => item.id.toString()}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         data={valuables}
@@ -64,6 +63,7 @@ const styles = StyleSheet.create({
   },
   flatlist: {
     paddingHorizontal: 20,
+    paddingBottom: 20,
   },
   separator: {
     height: 20,
