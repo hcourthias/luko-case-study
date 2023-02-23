@@ -2,7 +2,7 @@ import { Valuable } from '@models/Valuable'
 import { colors } from '@theme/colors'
 import { fonts } from '@theme/fonts'
 import { FC } from 'react'
-import { Image, Pressable, StyleProp, StyleSheet, Text, ViewStyle } from 'react-native'
+import { Image, Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
 
 type Props = {
   valuable: Valuable
@@ -21,10 +21,13 @@ export const ValuableCard: FC<Props> = ({
       onPress={handleOnPress}
     >
       <Image source={{ uri: valuable.photo }} style={styles.image} />
-      <Text style={styles.title} numberOfLines={2}>
-        {valuable.name}
-      </Text>
-      <Text style={styles.price}>€{valuable.purchasePrice}</Text>
+
+      <View style={styles.textContainer}>
+        <Text style={styles.title} numberOfLines={2}>
+          {valuable.name}
+        </Text>
+        <Text style={styles.price}>€{valuable.purchasePrice}</Text>
+      </View>
     </Pressable>
   )
 }
@@ -47,8 +50,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular,
     fontSize: 19,
     lineHeight: 26,
-    marginTop: 15,
-    marginHorizontal: 20,
+
     color: colors.gray[1000],
   },
   price: {
@@ -56,8 +58,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 20,
     marginTop: 5,
-    marginBottom: 15,
-    marginHorizontal: 20,
     color: colors.gray[700],
   },
   image: {
@@ -65,5 +65,11 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderTopLeftRadius: 14,
     borderTopRightRadius: 14,
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+    marginHorizontal: 20,
+    marginVertical: 15,
   },
 })

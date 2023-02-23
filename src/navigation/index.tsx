@@ -96,6 +96,7 @@ function BottomTabNavigator() {
         options={({ navigation }: RootTabScreenProps<'Inventory'>) => ({
           tabBarLabelStyle,
           tabBarIcon: ({ color }) => <TabBarIcon name='albums' color={color} />,
+          headerShown: true,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('AddItem')}
@@ -103,7 +104,12 @@ function BottomTabNavigator() {
                 opacity: pressed ? 0.5 : 1,
               })}
             >
-              <Ionicons name='add-circle' size={25} style={{ marginRight: 15 }} />
+              <Ionicons
+                name='add-circle'
+                size={32}
+                style={{ marginRight: 20 }}
+                color={colors.mainBlue}
+              />
             </Pressable>
           ),
         })}

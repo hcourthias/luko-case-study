@@ -1,18 +1,21 @@
 import { Title } from '@components/Title'
 import { ValuableCard } from '@components/ValuableCard'
 import useAlert from '@hooks/useAlert'
+import useAnimatedHeader from '@hooks/useAnimatedHeader'
 import { Valuable } from '@models/Valuable'
 import { removeValuable, selectValuables } from '@store/features/valuablesSlice'
+import { fonts } from '@theme/fonts'
 import { FC } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { Animated, StyleSheet, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootTabScreenProps } from '../navigation/types'
 import { colors } from '../theme/colors'
 
-const InventoryScreen: FC<RootTabScreenProps<'Inventory'>> = ({ navigation, route }) => {
+const InventoryScreen: FC<RootTabScreenProps<'Inventory'>> = ({ route }) => {
   const valuables = useSelector(selectValuables)
   const dispatch = useDispatch()
   const { showAlert } = useAlert()
+  const { handleOnScroll } = useAnimatedHeader(route.name)
 
   const handleOnValuablePress = (item: Valuable) => {
     showAlert({
@@ -28,22 +31,18 @@ const InventoryScreen: FC<RootTabScreenProps<'Inventory'>> = ({ navigation, rout
     })
   }
 
-  const handleAddButtonPress = () => navigation.navigate('AddItem')
-
   return (
     <View style={styles.container}>
-      <FlatList
+      <Animated.FlatList
+        scrollEventThrottle={16}
+        onScroll={handleOnScroll}
         style={styles.flatlist}
         numColumns={2}
         contentInset={{ bottom: 20 }}
         keyExtractor={(item) => item.id.toString()}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         data={valuables}
-        ListHeaderComponent={() => (
-          <Title onButtonPress={handleAddButtonPress} style={styles.title}>
-            {route.name}
-          </Title>
-        )}
+        ListHeaderComponent={() => <Title style={styles.title}>{route.name}</Title>}
         renderItem={({ item, index }) => (
           <ValuableCard
             valuable={item}
@@ -78,7 +77,10 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 15,
+    marginTop: 0,
   },
+  tabBarLabelStyle: { fontFamily: fonts.regular, fontSize: 17 },
+  headerBackground: { ...StyleSheet.absoluteFillObject, backgroundColor: colors.white },
 })
 
 export default InventoryScreen
