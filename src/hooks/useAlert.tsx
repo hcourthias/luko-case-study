@@ -1,4 +1,5 @@
-import { ActionSheetIOS, Alert as RNAlert, Platform } from 'react-native'
+import { isAndroid } from '@helpers/platform'
+import { ActionSheetIOS, Alert as RNAlert } from 'react-native'
 
 interface Alert {
   title: string
@@ -12,7 +13,7 @@ interface Alert {
 
 const useAlert = () => {
   const showAlert = ({ title, description, actions }: Alert) => {
-    if (Platform.OS === 'android') {
+    if (isAndroid()) {
       return RNAlert.alert(title, description, actions, {
         cancelable: true,
       })
