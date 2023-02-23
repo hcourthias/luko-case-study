@@ -19,14 +19,21 @@ export const ValuableCard: FC<Props> = ({
     <Pressable
       style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }, styles.container, containerStyle]}
       onPress={handleOnPress}
+      testID={`ValuableCard_${valuable.id}`}
     >
-      <Image source={{ uri: valuable.photo }} style={styles.image} />
+      <Image
+        source={{ uri: valuable.photo }}
+        style={styles.image}
+        testID={`ValuableCard_${valuable.id}_Image`}
+      />
 
       <View style={styles.textContainer}>
-        <Text style={styles.title} numberOfLines={2}>
+        <Text style={styles.title} numberOfLines={2} testID={`ValuableCard_${valuable.id}_Title`}>
           {valuable.name}
         </Text>
-        <Text style={styles.price}>€{valuable.purchasePrice}</Text>
+        <Text style={styles.price} testID={`ValuableCard_${valuable.id}_Price`}>
+          €{valuable.purchasePrice}
+        </Text>
       </View>
     </Pressable>
   )

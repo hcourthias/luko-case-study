@@ -52,7 +52,7 @@ export const ImagePickerView: FC<Props> = ({
 
   if (imageUri) {
     return (
-      <Pressable style={containerStyle} onPress={handleOnDelete}>
+      <Pressable style={containerStyle} onPress={handleOnDelete} testID={'ImagePickerView'}>
         <Image source={{ uri: imageUri }} style={styles.image} />
         <View style={styles.deleteIcon}>
           <Ionicons name='md-trash' size={15} color='white' />
@@ -61,7 +61,11 @@ export const ImagePickerView: FC<Props> = ({
     )
   }
   return (
-    <Pressable style={[containerStyle, styles.container]} onPress={handleShowAlert}>
+    <Pressable
+      style={[containerStyle, styles.container]}
+      onPress={handleShowAlert}
+      testID={'ImagePickerView_Empty'}
+    >
       <Ionicons name='md-camera' size={44} color={colors.mainBlue} />
       <Text style={styles.text}>Add a photo</Text>
     </Pressable>

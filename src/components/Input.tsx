@@ -42,12 +42,15 @@ export const Input: FC<Props> = ({
 
   return (
     <View>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title} testID={'Input_Title'}>
+        {title}
+      </Text>
       <View
         style={[
           isFocused ? { backgroundColor: '#D6E3FD' } : { backgroundColor: 'transparent' },
           styles.inputContainer,
         ]}
+        testID={'Input_Background_Shadow'}
       >
         <View
           style={[
@@ -55,18 +58,26 @@ export const Input: FC<Props> = ({
             styles.outline,
             { height },
           ]}
+          testID={'Input_Background_Outline'}
         >
           <TextInput
+            testID={'Input_TextInput'}
             onFocus={handleOnFocus}
             onBlur={handleOnBlur}
             style={styles.input}
             placeholderTextColor={colors.gray[300]}
             {...props}
           />
-          <View style={styles.rightContainer}>{rightComponent}</View>
+          <View style={styles.rightContainer} testID={'Input_RightComponent'}>
+            {rightComponent}
+          </View>
         </View>
       </View>
-      {error && touched && <Text style={styles.error}>{error}</Text>}
+      {error && touched && (
+        <Text style={styles.error} testID={'Input_Error'}>
+          {error}
+        </Text>
+      )}
     </View>
   )
 }

@@ -8,6 +8,7 @@ export default function AddButton(props: PressableProps) {
       onPress={props.onPress}
       style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
       pressRetentionOffset={10}
+      testID={'AddButton'}
     >
       <Ionicons name='add-circle' size={32} color={colors.mainBlue} />
     </Pressable>
