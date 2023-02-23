@@ -11,7 +11,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Pressable, Text, View } from 'react-native'
 
 import InventoryScreen from '@screens/InventoryScreen'
-import AddItemScreen from '@screens/AddItemScreen'
+import AddItemScreen from '@screens/AddItemScreens'
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from './types'
 import { colors } from '@theme/colors'
 import { fonts } from '@theme/fonts'

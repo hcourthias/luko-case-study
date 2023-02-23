@@ -15,12 +15,9 @@ export const valuablesSlice = createSlice({
   initialState,
   reducers: {
     addValuable: (state, action: PayloadAction<Omit<Valuable, 'id'>>) => {
-      const valuable = action.payload
-      const totalValue = state.valuables.reduce((acc, curr) => acc + curr.purchasePrice, 0)
-      if (totalValue + valuable.purchasePrice > TOTAL_VALUE_LIMIT) {
-        return
-      }
-      state.valuables.push({ id: state.valuables.length, ...valuable })
+      const id = state.valuables.length > 0 ? Math.max(...state.valuables.map((v) => v.id)) + 1 : 0
+      console.log(id)
+      state.valuables.push({ id, ...action.payload })
     },
     removeValuable: (state, action: PayloadAction<Valuable>) => {
       const valuable = action.payload
@@ -32,5 +29,7 @@ export const valuablesSlice = createSlice({
 export const { addValuable, removeValuable } = valuablesSlice.actions
 
 export const selectValuables = (state: RootState) => state.valuables.valuables
+export const selectTotalValue = (state: RootState) =>
+  state.valuables.valuables.reduce((acc, curr) => acc + curr.purchasePrice, 0)
 
 export default valuablesSlice.reducer

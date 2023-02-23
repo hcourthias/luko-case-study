@@ -1,17 +1,45 @@
 import { colors } from '@theme/colors'
 import { fonts } from '@theme/fonts'
 import { FC, useState } from 'react'
-import { StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native'
+import {
+  NativeSyntheticEvent,
+  StyleSheet,
+  Text,
+  TextInput,
+  TextInputFocusEventData,
+  TextInputProps,
+  View,
+} from 'react-native'
 
 type Props = {
   title: string
+  error?: string
+  touched?: boolean
+  rightComponent?: React.ReactNode
+  height?: number
 } & TextInputProps
 
-export const Input: FC<Props> = ({ title, multiline, ...props }: Props) => {
+export const Input: FC<Props> = ({
+  title,
+  error,
+  rightComponent,
+  height = 48,
+  touched,
+  onBlur,
+  onFocus,
+  ...props
+}: Props) => {
   const [isFocused, setIsFocused] = useState(false)
 
-  const handleOnFocus = () => setIsFocused(true)
-  const handleOnBlur = () => setIsFocused(false)
+  const handleOnFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    onFocus?.(e)
+    setIsFocused(true)
+  }
+  const handleOnBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    onBlur?.(e)
+    setIsFocused(false)
+  }
+
   return (
     <View>
       <Text style={styles.title}>{title}</Text>
@@ -25,19 +53,20 @@ export const Input: FC<Props> = ({ title, multiline, ...props }: Props) => {
           style={[
             isFocused ? { borderColor: colors.mainBlue } : { borderColor: colors.gray[100] },
             styles.outline,
-            multiline && { height: 128 },
+            { height },
           ]}
         >
           <TextInput
-            multiline={multiline}
             onFocus={handleOnFocus}
             onBlur={handleOnBlur}
             style={styles.input}
             placeholderTextColor={colors.gray[300]}
             {...props}
           />
+          <View style={styles.rightContainer}>{rightComponent}</View>
         </View>
       </View>
+      {error && touched && <Text style={styles.error}>{error}</Text>}
     </View>
   )
 }
@@ -61,6 +90,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: colors.white,
     height: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   input: {
     flex: 1,
@@ -70,5 +101,18 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 12,
     paddingHorizontal: 15,
+    height: '100%',
+    textAlignVertical: 'top',
+  },
+  error: {
+    fontFamily: fonts.regular,
+    fontSize: 13,
+    lineHeight: 17,
+    marginTop: 3,
+    marginHorizontal: 4,
+    color: colors.red,
+  },
+  rightContainer: {
+    marginRight: 15,
   },
 })

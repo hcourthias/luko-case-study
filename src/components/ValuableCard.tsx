@@ -21,8 +21,8 @@ export const ValuableCard: FC<Props> = ({
       onPress={handleOnPress}
     >
       <Image source={{ uri: valuable.photo }} style={styles.image} />
-      <Text style={styles.title}>
-        {valuable.id % 2 === 0 ? valuable.name : valuable.name + valuable.name}
+      <Text style={styles.title} numberOfLines={2}>
+        {valuable.name}
       </Text>
       <Text style={styles.price}>€{valuable.purchasePrice}</Text>
     </Pressable>

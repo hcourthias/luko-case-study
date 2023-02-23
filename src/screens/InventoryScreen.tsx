@@ -1,6 +1,8 @@
 import { Title } from '@components/Title'
 import { ValuableCard } from '@components/ValuableCard'
-import { addValuable, selectValuables } from '@store/features/valuablesSlice'
+import useAlert from '@hooks/useAlert'
+import { Valuable } from '@models/Valuable'
+import { removeValuable, selectValuables } from '@store/features/valuablesSlice'
 import { FC } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,16 +12,21 @@ import { colors } from '../theme/colors'
 const InventoryScreen: FC<RootTabScreenProps<'Inventory'>> = ({ navigation, route }) => {
   const valuables = useSelector(selectValuables)
   const dispatch = useDispatch()
+  const { showAlert } = useAlert()
 
-  const handleAddValuablePress = () =>
-    dispatch(
-      addValuable({
-        name: 'Lou.Yetu necklace',
-        purchasePrice: 100,
-        photo:
-          'https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw4ba24826/images/large/637708739570526487-2088237.png?sw=750&sh=750&sm=fit&sfrm=png',
-      }),
-    )
+  const handleOnValuablePress = (item: Valuable) => {
+    showAlert({
+      title: 'Delete valuable',
+      description: `Are you sure you want to delete ${item.name}?`,
+      actions: [
+        {
+          text: 'Delete',
+          onPress: () => dispatch(removeValuable(item)),
+          destructive: true,
+        },
+      ],
+    })
+  }
 
   const handleAddButtonPress = () => navigation.navigate('AddItem')
 
@@ -33,15 +40,16 @@ const InventoryScreen: FC<RootTabScreenProps<'Inventory'>> = ({ navigation, rout
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         data={valuables}
         ListHeaderComponent={() => (
-          <>
-            <Title onButtonPress={handleAddButtonPress}>{route.name}</Title>
-          </>
+          <Title onButtonPress={handleAddButtonPress} style={styles.title}>
+            {route.name}
+          </Title>
         )}
         renderItem={({ item, index }) => (
           <ValuableCard
             valuable={item}
             key={item.id}
             containerStyle={index % 2 === 0 ? styles.leftItem : styles.rightItem}
+            onPress={() => handleOnValuablePress(item)}
           />
         )}
       />
@@ -67,6 +75,9 @@ const styles = StyleSheet.create({
   rightItem: {
     flex: 0.5,
     marginLeft: 10,
+  },
+  title: {
+    marginBottom: 15,
   },
 })
 

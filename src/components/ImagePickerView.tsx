@@ -1,20 +1,10 @@
 import { colors } from '@theme/colors'
 import { fonts } from '@theme/fonts'
 import { FC } from 'react'
-import {
-  ActionSheetIOS,
-  Alert,
-  Image,
-  Platform,
-  Pressable,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-} from 'react-native'
+import { Image, Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { ImagePicker } from '../sdk/ImagePicker'
+import useAlert from '@hooks/useAlert'
 type Props = {
   imageUri?: string
   containerStyle?: StyleProp<ViewStyle>
@@ -28,9 +18,12 @@ export const ImagePickerView: FC<Props> = ({
   onImageAvailable,
   onDelete: handleOnDelete,
 }: Props) => {
+  const { showAlert } = useAlert()
+
   const handleTakePhoto = async () => {
     const result = await ImagePicker.takePhoto()
     if (result && !result.canceled) {
+      console.log(result.assets)
       return onImageAvailable(result.assets[0].uri)
     }
   }
@@ -38,46 +31,25 @@ export const ImagePickerView: FC<Props> = ({
   const handlePickImage = async () => {
     const result = await ImagePicker.pickImage()
     if (result && !result.canceled) {
+      console.log(result.assets)
       return onImageAvailable(result.assets[0].uri)
     }
   }
 
   const handleShowAlert = () => {
-    if (Platform.OS === 'android') {
-      return Alert.alert(
-        'Add a photo',
-        undefined,
-        [
-          {
-            text: 'Take a photo',
-            onPress: () => ImagePicker.takePhoto(),
-          },
-          {
-            text: 'Choose in the library',
-            onPress: () => ImagePicker.pickImage(),
-          },
-        ],
+    showAlert({
+      title: 'Add a photo',
+      actions: [
         {
-          cancelable: true,
+          text: 'Take a photo',
+          onPress: handleTakePhoto,
         },
-      )
-    }
-
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        options: ['Take a photo', 'Choose in the library', 'Cancel'],
-        cancelButtonIndex: 2,
-        userInterfaceStyle: 'light',
-      },
-      (buttonIndex) => {
-        if (buttonIndex === 0) {
-          handleTakePhoto()
-        }
-        if (buttonIndex === 1) {
-          handlePickImage()
-        }
-      },
-    )
+        {
+          text: 'Choose in the library',
+          onPress: handlePickImage,
+        },
+      ],
+    })
   }
 
   if (imageUri) {

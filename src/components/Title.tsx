@@ -10,8 +10,8 @@ type Props = {
 }
 export const Title: FC<Props> = ({ children, style, onButtonPress }) => {
   return (
-    <View style={styles.titleContainer}>
-      <Text style={[styles.title, style]}>{children}</Text>
+    <View style={[styles.titleContainer, style]}>
+      <Text style={styles.title}>{children}</Text>
       {onButtonPress ? <AddButton onPress={onButtonPress} /> : null}
     </View>
   )
