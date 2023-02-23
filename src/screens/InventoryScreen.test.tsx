@@ -1,20 +1,19 @@
 import { MOCKED_VALUABLE } from '@store/features/valuablesSlice.test'
-import { setupStore } from '@store/store'
 import { render } from '@testing-library/react-native'
-import { Provider } from 'react-redux'
+import { DefaultWrapper } from '@utils/tests/DefaultWrapper'
 import InventoryScreen from './InventoryScreen'
 
 describe('InventoryScreen', () => {
   it('renders correctly', () => {
     const { queryByTestId } = render(<InventoryScreen />, {
       wrapper: ({ children }) => (
-        <Provider
-          store={setupStore({
+        <DefaultWrapper
+          initialState={{
             valuables: { valuables: [MOCKED_VALUABLE, { ...MOCKED_VALUABLE, id: 1 }] },
-          })}
+          }}
         >
           {children}
-        </Provider>
+        </DefaultWrapper>
       ),
     })
     expect(queryByTestId('ValuableCard_0')).toBeTruthy()
