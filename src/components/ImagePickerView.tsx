@@ -23,7 +23,6 @@ export const ImagePickerView: FC<Props> = ({
   const handleTakePhoto = async () => {
     const result = await ImagePicker.takePhoto()
     if (result && !result.canceled) {
-      console.log(result.assets)
       return onImageAvailable(result.assets[0].uri)
     }
   }
@@ -31,7 +30,6 @@ export const ImagePickerView: FC<Props> = ({
   const handlePickImage = async () => {
     const result = await ImagePicker.pickImage()
     if (result && !result.canceled) {
-      console.log(result.assets)
       return onImageAvailable(result.assets[0].uri)
     }
   }

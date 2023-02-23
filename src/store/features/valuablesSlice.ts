@@ -16,7 +16,6 @@ export const valuablesSlice = createSlice({
   reducers: {
     addValuable: (state, action: PayloadAction<Omit<Valuable, 'id'>>) => {
       const id = state.valuables.length > 0 ? Math.max(...state.valuables.map((v) => v.id)) + 1 : 0
-      console.log(id)
       state.valuables.push({ id, ...action.payload })
     },
     removeValuable: (state, action: PayloadAction<Valuable>) => {

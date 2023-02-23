@@ -4,7 +4,7 @@ import { fonts } from '@theme/fonts'
 import { useCallback, useEffect, useRef } from 'react'
 import { Animated, StyleSheet } from 'react-native'
 
-const useAnimatedHeader = (title: string) => {
+const useAnimatedHeader = (title: string, titleHeight: number) => {
   const navigation = useNavigation()
 
   const scrolling = useRef(new Animated.Value(0)).current
@@ -23,7 +23,7 @@ const useAnimatedHeader = (title: string) => {
   )
 
   const titleOpacity = scrolling.interpolate({
-    inputRange: [40, 42],
+    inputRange: [titleHeight - 2, titleHeight],
     outputRange: [0, 1],
   })
 
