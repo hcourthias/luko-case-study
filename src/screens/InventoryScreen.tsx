@@ -3,15 +3,16 @@ import { ValuableCard } from '@components/ValuableCard'
 import useAlert from '@hooks/useAlert'
 import useAnimatedHeader from '@hooks/useAnimatedHeader'
 import { Valuable } from '@models/Valuable'
+import { useRoute } from '@react-navigation/native'
 import { removeValuable, selectValuables } from '@store/features/valuablesSlice'
 import { fonts } from '@theme/fonts'
 import { FC } from 'react'
 import { Animated, StyleSheet, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootTabScreenProps } from '../navigation/types'
 import { colors } from '../theme/colors'
 
-const InventoryScreen: FC<RootTabScreenProps<'Inventory'>> = ({ route }) => {
+const InventoryScreen: FC = () => {
+  const route = useRoute()
   const valuables = useSelector(selectValuables)
   const dispatch = useDispatch()
   const { showAlert } = useAlert()

@@ -2,7 +2,7 @@ import { Valuable } from '@models/Valuable'
 import { addValuable, removeValuable } from '@store/features/valuablesSlice'
 import { valuablesSlice } from './valuablesSlice'
 
-const MOCKED_VALUABLE: Valuable = {
+export const MOCKED_VALUABLE: Valuable = {
   id: 0,
   name: 'Valuable 1',
   description: 'Description 1',
