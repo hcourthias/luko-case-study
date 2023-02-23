@@ -4,11 +4,6 @@ import { render } from '@testing-library/react-native'
 import { Provider } from 'react-redux'
 import InventoryScreen from './InventoryScreen'
 
-const mockNavigation = {
-  navigate: jest.fn(),
-  setOptions: jest.fn(),
-}
-
 describe('InventoryScreen', () => {
   it('renders correctly', () => {
     const { queryByTestId } = render(<InventoryScreen />, {
