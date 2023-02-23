@@ -30,6 +30,7 @@
     "expo-font": "~11.0.1",
     "expo-image-picker": "~14.0.2",
     "expo-status-bar": "~1.4.2",
+    "expo-updates": "~0.15.6",
     "formik": "^2.2.9",
     "react": "18.1.0",
     "react-dom": "18.1.0",
