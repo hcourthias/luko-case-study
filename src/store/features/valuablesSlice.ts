@@ -2,7 +2,7 @@ import { Valuable } from '@models/Valuable'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@store/store'
 
-const TOTAL_VALUE_LIMIT = 40_000 // 40k euros
+const TOTAL_VALUE_LIMIT = 40000 // 40k euros
 
 type ValuablesState = {
   valuables: Valuable[]

@@ -40,7 +40,7 @@ const useAddValuableForm = () => {
           .test(
             'max',
             'The total valuation of your items cannot exceed 40000',
-            (value) => totalValue + value <= 40_000,
+            (value) => totalValue + value <= 40000,
           )
           .min(1),
         description: Yup.string().optional(),
